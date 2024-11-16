@@ -55,4 +55,11 @@ t_map createMapFromFile(char *);
  */
 void displayMap(t_map);
 
+/**
+ * @brief free the map struct's arrays
+ * 
+ * @param map : a pointer to the map to be freed. Will be set to NULL.
+ */
+void free_map(t_map *map);
+
 #endif //UNTITLED1_MAP_H
