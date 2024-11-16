@@ -305,17 +305,13 @@ void displayMap(t_map map)
 
 void free_map(t_map *map)
 {
-    int ydim = map->y_max;
-    for (int i = 0; i < ydim; i++)
+    for (int i = 0; i < map->y_max; i++)
     {
         free(map->soils[i]);
+        free(map->costs[i]);
     }
     free(map->soils);
     map->soils = NULL;
-    for (int i = 0; i < ydim; i++)
-    {
-        free(map->costs[i]);
-    }
     free(map->costs);
     map->costs = NULL;
 }
