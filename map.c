@@ -301,3 +301,16 @@ void displayMap(t_map map)
     }
     return;
 }
+
+void free_map(t_map *map)
+{
+    for (int i = 0; i < map->y_max; i++)
+    {
+        free(map->soils[i]);
+        free(map->costs[i]);
+    }
+    free(map->soils);
+    map->soils = NULL;
+    free(map->costs);
+    map->costs = NULL;
+}
