@@ -188,6 +188,7 @@ void calculateCosts(t_map map)
         }
     }
 
+    free(queue.values);
 
     return;
 }
