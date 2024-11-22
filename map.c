@@ -72,6 +72,7 @@ void removeFalseCrevasses(t_map map)
     while (!over)
     {
         int min_cost = COST_UNDEF;
+        int max_cost = 0;
         imin = map.y_max;
         jmin = map.x_max;
         for (int i=0; i<map.y_max; i++)
@@ -84,8 +85,14 @@ void removeFalseCrevasses(t_map map)
                     imin = i;
                     jmin = j;
                 }
+                if (map.soils[i][j] != CREVASSE && map.costs[i][j] > 10000 && map.costs[i][j] > max_cost)
+                {
+                    max_cost = map.costs[i][j];
+                }
+                
             }
         }
+
         if (imin < map.y_max && jmin < map.x_max)
         {
             // step 2 : calculate the costs of the neighbours of the position
@@ -115,7 +122,10 @@ void removeFalseCrevasses(t_map map)
                 min_neighbour = (map.costs[dp.y][dp.x] < min_neighbour) ? map.costs[dp.y][dp.x] : min_neighbour;
             }
             int self_cost = _soil_cost[map.soils[imin][jmin]];
+            int prev = map.costs[imin][jmin];
             map.costs[imin][jmin] = (min_neighbour + self_cost < map.costs[imin][jmin]) ? min_neighbour + self_cost : map.costs[imin][jmin];
+            if(prev == map.costs[imin][jmin])
+                map.costs[imin][jmin] = max_cost + 1;
         }
         else
         {
@@ -189,7 +199,6 @@ void calculateCosts(t_map map)
     }
 
     free(queue.values);
-
     return;
 }
 /* definition of exported functions */
